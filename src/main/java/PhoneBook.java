@@ -7,6 +7,7 @@ public class PhoneBook {
         this.phonebook = map;
     }
 
+    // constructor i want to test
     public PhoneBook() {
         this(new HashMap<>()); //calling another constructor;
     }
@@ -18,7 +19,12 @@ public class PhoneBook {
     }
 
     public void addAll(String name, String... phoneNumbers) {
-        phonebook.put(name, Arrays.asList(phoneNumbers));
+        List<String> numbersList = new ArrayList<>();
+        for(String number : phoneNumbers){
+            numbersList.add(number);
+        }
+        phonebook.put(name, numbersList);
+        //phonebook.put(name, Arrays.asList(phoneNumbers));
     }
 
     public void remove(String name) {
@@ -30,7 +36,11 @@ public class PhoneBook {
     }
 
     public List<String> lookup(String name) {
-        return phonebook.getOrDefault(name, new ArrayList<>());
+        List<String> phoneNumbers = new ArrayList<>();
+        if (phonebook.containsKey(name)){
+            phoneNumbers.addAll(phonebook.get(name));
+        }
+        return phoneNumbers;
     }
 
     public String reverseLookup(String phoneNumber)  {
@@ -47,7 +57,7 @@ public class PhoneBook {
     }
 
     public Map<String, List<String>> getMap() {
-        return new HashMap<>(phonebook);
+        return phonebook;
     }
 
     public Map<String, List<String>> getPhonebook() {
